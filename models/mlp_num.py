@@ -99,7 +99,7 @@ class MLPNUM_Model(nn.Module):
         self.layers = nn.ModuleList()
         #self.data_transform_layer = nn.ModuleList([])
         # Input Layer (= first hidden layer)
-        self.input_layer = nn.Linear((input_dim, bins), hidden_dim)
+        self.input_layer = nn.Linear(input_dim*bins, hidden_dim)
         self.data_transfomer_layer = [DataTransfomer(1,bins) for _ in range(input_dim)]
         self.split = Split(input_dim)
         self.unite = Unite()
@@ -113,6 +113,7 @@ class MLPNUM_Model(nn.Module):
         x = self.split(x)
         x = [self.data_transfomer_layer[i](tensor) for i,tensor in enumerate(x)]
         x = self.unite(x)
+        x = torch.flatten(x)
         x = F.relu(self.input_layer(x))
 
         # Use ReLU as activation for all hidden layers
