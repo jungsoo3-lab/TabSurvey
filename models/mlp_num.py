@@ -102,7 +102,7 @@ class MLPNUM_Model(nn.Module):
         self.input_layer = nn.Linear(input_dim*bins, hidden_dim)
         self.data_transfomer_layer = [DataTransformer(1,bins) for _ in range(input_dim)]
         #self.split = Split(nparts = input_dim)
-        self.unite = Unite()
+        #self.unite = Unite()
         # Hidden Layers (number specified by n_layers)
         self.layers.extend([nn.Linear(hidden_dim, hidden_dim) for _ in range(n_layers - 1)])
 
@@ -111,6 +111,7 @@ class MLPNUM_Model(nn.Module):
 
     def forward(self, x):
         #x = self.split(x)
+        print(x.shape)
         x = [self.data_transfomer_layer[i](x[:,i]) for i in range(self.input_dim)]
         x = torch.flatten(x)
         x = F.relu(self.input_layer(x))
