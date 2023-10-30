@@ -83,7 +83,7 @@ class MLPNUM_Model(nn.Module):
         #x = self.split(x)
         print(x.shape)
         x = [self.data_transformer_layer[i](x[:,i].reshape((x.shape[0], 1))) for i in range(len(self.data_transformer_layer))]
-        x = torch.flatten(x)
+        x = torch.cat(x)
         x = F.relu(self.input_layer(x))
 
         # Use ReLU as activation for all hidden layers
