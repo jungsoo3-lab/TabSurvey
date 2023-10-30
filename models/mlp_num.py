@@ -46,34 +46,6 @@ class MLPNUM(BaseModelTorch):
 """
 code obtained from discussion https://stackoverflow.com/questions/65831101/is-there-a-split-equivalent-to-torch-nn-sequential
 """
-class Split(torch.nn.Module):
-    """
-    https://stackoverflow.com/questions/65831101/is-there-a-parallel-equivalent-to-toech-nn-sequencial#65831101
-
-    models a split in the network. works with convolutional models (not FC).
-    specify out channels for the model to divide by n_parts.
-    """
-    def __init__(self, module, n_parts: int, dim=1):
-        super().__init__()
-        self._n_parts = n_parts
-        self._dim = dim
-        self._module = module
-
-    def forward(self, inputs):
-        output = self._module(inputs)
-        chunk_size = output.shape[self._dim] // self._n_parts
-        return torch.split(output, chunk_size, dim=self._dim)
-
-
-class Unite(torch.nn.Module):
-    """
-    put this between two Splits to allow them to coexist in sequence.
-    """
-    def __init__(self):
-        super(Unite, self).__init__()
-
-    def forward(self, inputs):
-        return torch.cat(inputs, dim=1)
 
 class DataTransformer(torch.nn.Module):
     """
@@ -100,9 +72,7 @@ class MLPNUM_Model(nn.Module):
         #self.data_transform_layer = nn.ModuleList([])
         # Input Layer (= first hidden layer)
         self.input_layer = nn.Linear(input_dim*bins, hidden_dim)
-        self.data_transfomer_layer = [DataTransformer(1,bins) for _ in range(input_dim)]
-        #self.split = Split(nparts = input_dim)
-        #self.unite = Unite()
+        self.data_transfomer_layer = [DataTransformer(input_dim,bins) for _ in range(input_dim)]
         # Hidden Layers (number specified by n_layers)
         self.layers.extend([nn.Linear(hidden_dim, hidden_dim) for _ in range(n_layers - 1)])
 
@@ -112,7 +82,7 @@ class MLPNUM_Model(nn.Module):
     def forward(self, x):
         #x = self.split(x)
         print(x.shape)
-        x = [self.data_transfomer_layer[i](x[:,i]) for i in range(self.input_dim)]
+        x = [self.data_transfomer_layer[i](x[:,i]) for i in range(len(self.data_transformer_layer))]
         x = torch.flatten(x)
         x = F.relu(self.input_layer(x))
 
