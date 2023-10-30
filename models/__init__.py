@@ -40,6 +40,10 @@ def str2model(model):
     elif model == "MLP":
         from models.mlp import MLP
         return MLP
+    
+    elif model == "MLPNUM":
+        from models.mlp_num import MLPNUM
+        return MLPNUM
 
     elif model == "ModelTree":
         from models.modeltree import ModelTree
