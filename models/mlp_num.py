@@ -111,8 +111,7 @@ class MLPNUM_Model(nn.Module):
 
     def forward(self, x):
         #x = self.split(x)
-        x = [self.data_transfomer_layer[i](x[:,i]) for i in range(input_dim)]
-        x = self.unite(x)
+        x = [self.data_transfomer_layer[i](x[:,i]) for i in range(self.input_dim)]
         x = torch.flatten(x)
         x = F.relu(self.input_layer(x))
 
