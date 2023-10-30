@@ -82,7 +82,7 @@ class MLPNUM_Model(nn.Module):
     def forward(self, x):
         #x = self.split(x)
         print(x.shape)
-        x = [self.data_transformer_layer[i](x[:,i].T) for i in range(len(self.data_transformer_layer))]
+        x = [self.data_transformer_layer[i](x[:,i].reshape((x.shape[0], 1))) for i in range(len(self.data_transformer_layer))]
         x = torch.flatten(x)
         x = F.relu(self.input_layer(x))
 
