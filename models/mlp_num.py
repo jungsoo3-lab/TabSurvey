@@ -34,6 +34,7 @@ class MLPNUM(BaseModelTorch):
 
     @classmethod
     def define_trial_parameters(cls, trial, args):
+        print(self.args.num_features)
         params = {
             "hidden_dim": trial.suggest_int("hidden_dim", 10, 100),
             "n_layers": trial.suggest_int("n_layers", 2, 5),
@@ -43,10 +44,6 @@ class MLPNUM(BaseModelTorch):
         return params
 
 # numerical data transformation module
-"""
-code obtained from discussion https://stackoverflow.com/questions/65831101/is-there-a-split-equivalent-to-torch-nn-sequential
-"""
-
 class DataTransformer(torch.nn.Module):
     """
     Data transformer for a single feature
@@ -80,11 +77,10 @@ class MLPNUM_Model(nn.Module):
         self.output_layer = nn.Linear(hidden_dim, output_dim)
 
     def forward(self, x):
-        #x = self.split(x)
-        print(x.shape)
+        # data transformation layer
         x = [self.data_transformer_layer[i](x[:,i].reshape((x.shape[0], 1))) for i in range(len(self.data_transformer_layer))]
         x = torch.cat(x, dim = 1)
-        #print(x.shape)
+
         x = F.relu(self.input_layer(x))
 
         # Use ReLU as activation for all hidden layers
