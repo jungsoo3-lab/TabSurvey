@@ -41,7 +41,7 @@ class MLPNUM(BaseModelTorch):
             "learning_rate": trial.suggest_float("learning_rate", 0.0005, 0.001)
         }
         for i in range(args.num_features):
-            params[f"bins_{i}"] = trial.suggest_int("bins", 2, 10)
+            params[f"bins_{i}"] = trial.suggest_int(f"bins_{i}", 2, 10)
         return params
 
 # numerical data transformation module
