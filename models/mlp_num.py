@@ -69,7 +69,7 @@ class MLPNUM_Model(nn.Module):
         self.layers = nn.ModuleList()
         #self.data_transform_layer = nn.ModuleList([])
         # Input Layer (= first hidden layer)
-        self.input_layer = nn.Linear(input_dim*sum(bins), hidden_dim)
+        self.input_layer = nn.Linear(sum(bins), hidden_dim)
         self.data_transformer_layer = [DataTransformer(1, bins[i]) for i in range(input_dim)]
         # Hidden Layers (number specified by n_layers)
         self.layers.extend([nn.Linear(hidden_dim, hidden_dim) for _ in range(n_layers - 1)])
