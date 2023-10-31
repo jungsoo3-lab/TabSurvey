@@ -16,7 +16,7 @@ class MLPNUM(BaseModelTorch):
         super().__init__(params, args)
 
         self.model = MLPNUM_Model(n_layers=self.params["n_layers"], input_dim=self.args.num_features,
-                               bins = [self.params[f"bins_{i}"] for i in range(self.args.num_features) ],
+                               bins = self.params['bins'],#[self.params[f"bins_{i}"] for i in range(self.args.num_features) ],
                                hidden_dim=self.params["hidden_dim"], output_dim=self.args.num_classes,
                                task=self.args.objective)
 
@@ -37,11 +37,11 @@ class MLPNUM(BaseModelTorch):
         params = {
             "hidden_dim": trial.suggest_int("hidden_dim", 10, 100),
             "n_layers": trial.suggest_int("n_layers", 2, 5),
-            #"bins": trial.suggest_int("bins", 2, 10),
+            "bins": trial.suggest_int("bins", 2, 20),
             "learning_rate": trial.suggest_float("learning_rate", 0.0005, 0.001)
         }
-        for i in range(args.num_features):
-            params[f"bins_{i}"] = trial.suggest_int(f"bins_{i}", 2, 10)
+        #for i in range(args.num_features):
+        #    params[f"bins_{i}"] = trial.suggest_int(f"bins_{i}", 2, 10)
         return params
 
 # numerical data transformation module
@@ -69,8 +69,8 @@ class MLPNUM_Model(nn.Module):
         self.layers = nn.ModuleList()
         #self.data_transform_layer = nn.ModuleList([])
         # Input Layer (= first hidden layer)
-        self.input_layer = nn.Linear(sum(bins), hidden_dim)
-        self.data_transformer_layer = [DataTransformer(1, bins[i]) for i in range(input_dim)]
+        self.input_layer = nn.Linear(input_dim*bins, hidden_dim)
+        self.data_transformer_layer = [DataTransformer(1, bins) for i in range(input_dim)]
         # Hidden Layers (number specified by n_layers)
         self.layers.extend([nn.Linear(hidden_dim, hidden_dim) for _ in range(n_layers - 1)])
 
