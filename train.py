@@ -112,7 +112,7 @@ def main(args):
     study = optuna.create_study(direction=args.direction,
                                 study_name=study_name,
                                 storage=storage_name,
-                                load_if_exists=True)
+                                load_if_exists=False)
     study.optimize(Objective(args, model_name, X, y), n_trials=args.n_trials)
     print("Best parameters:", study.best_trial.params)
 
