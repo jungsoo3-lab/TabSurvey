@@ -37,7 +37,7 @@ class MLPNUM(BaseModelTorch):
         params = {
             "hidden_dim": trial.suggest_int("hidden_dim", 10, 100),
             "n_layers": trial.suggest_int("n_layers", 2, 5),
-            "bins": trial.suggest_int("bins", 2, 20),
+            "bins": trial.suggest_int("bins", 2, 10),
             "learning_rate": trial.suggest_float("learning_rate", 0.0005, 0.001)
         }
         #for i in range(args.num_features):
