@@ -60,7 +60,7 @@ class MLP_Model(nn.Module):
         self.output_layer = nn.Linear(hidden_dim, output_dim)
 
     def forward(self, x):
-        print(x.shape)
+        #print(x.shape)
         x = F.relu(self.input_layer(x))
 
         # Use ReLU as activation for all hidden layers
