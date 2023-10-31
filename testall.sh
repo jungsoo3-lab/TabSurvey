@@ -40,9 +40,9 @@ MODELS=( #["LinearModel"]=$SKLEARN_ENV
           )
 
 CONFIGS=( "config/adult.yml"
-          #"config/covertype.yml"
-          #"config/california_housing.yml"
-          # "config/higgs.yml"
+          "config/covertype.yml"
+          "config/california_housing.yml"
+          "config/higgs.yml"
           )
 
 # conda init bash
