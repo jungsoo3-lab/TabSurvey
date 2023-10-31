@@ -34,7 +34,7 @@ class MLPNUM(BaseModelTorch):
 
     @classmethod
     def define_trial_parameters(cls, trial, args):
-        print(self.args.num_features)
+        print(args.num_features)
         params = {
             "hidden_dim": trial.suggest_int("hidden_dim", 10, 100),
             "n_layers": trial.suggest_int("n_layers", 2, 5),
