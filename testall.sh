@@ -22,7 +22,7 @@ MODELS=( #["LinearModel"]=$SKLEARN_ENV
          # ["XGBoost"]=$GBDT_ENV
          # ["CatBoost"]=$GBDT_ENV
          # ["LightGBM"]=$GBDT_ENV
-         ["MLP"]=$TORCH_ENV
+         # ["MLP"]=$TORCH_ENV
          # ["TabNet"]=$TORCH_ENV
          # ["VIME"]=$TORCH_ENV
          # ["TabTransformer"]=$TORCH_ENV
@@ -39,10 +39,10 @@ MODELS=( #["LinearModel"]=$SKLEARN_ENV
          # ["DANet"]=$TORCH_ENV
           )
 
-CONFIGS=( "config/adult.yml"
-          "config/covertype.yml"
+CONFIGS=( #"config/adult.yml"
+          #"config/covertype.yml"
           "config/california_housing.yml"
-          "config/higgs.yml"
+          #"config/higgs.yml"
           )
 
 # conda init bash
