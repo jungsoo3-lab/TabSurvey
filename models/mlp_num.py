@@ -54,7 +54,7 @@ class DataTransformer(torch.nn.Module):
         self.bins = bins
         self.layer = nn.Linear(input_dim, bins)
         self.layer.weight.data.fill_(bins)
-        torch.nn.init(self.layer.bias, -bins, 0)
+        torch.nn.init.uniform_(self.layer.bias, -bins, 0)
 
     def forward(self, x):
         x = F.hardtanh(self.layer(x))
