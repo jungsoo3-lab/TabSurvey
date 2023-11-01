@@ -1,5 +1,5 @@
 import sklearn.datasets
-from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder, MinMaxScaler
 
 import numpy as np
 import pandas as pd
@@ -138,8 +138,14 @@ def load_data(args):
 
     if args.scale:
         print("Scaling the data...")
-        scaler = StandardScaler()
-        X[:, num_idx] = scaler.fit_transform(X[:, num_idx])
+        if "NUM" not in args.model_name:
+            scaler = StandardScaler()
+            X[:, num_idx] = scaler.fit_transform(X[:, num_idx])
+        else:
+            scaler = MinMaxScaler()
+            X[:, num_idx] = scaler.fit_transform(X[:, num_idx])
+
+
 
     if args.one_hot_encode:
         ohe = OneHotEncoder(sparse=False, handle_unknown='ignore')
