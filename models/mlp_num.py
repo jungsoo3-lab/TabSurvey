@@ -52,7 +52,7 @@ class FeaturePrep(torch.nn.Module):
     def __init__(self, bins):
         super().__init__()
         self.bins = bins
-        self.layer = nn.Linear(bins)
+        self.layer = nn.Linear(1, bins)
         self.layer.weight.data.fill_(bins)
         torch.nn.init.uniform_(self.layer.bias, -bins, 0)
 
