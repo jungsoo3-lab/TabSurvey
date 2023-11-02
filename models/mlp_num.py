@@ -45,19 +45,19 @@ class MLPNUM(BaseModelTorch):
         return params
 
 # numerical data transformation module
-class DataTransformer(torch.nn.Module):
+class FeaturePrep(torch.nn.Module):
     """
-    Data transformer for a single feature
+    Data Transformer for a single feature
     """
-    def __init__(self, input_dim, bins):
+    def __init__(self, bins):
         super().__init__()
         self.bins = bins
-        self.layer = nn.Linear(input_dim, bins)
-        #self.layer.weight.data.fill_(bins)
-        #torch.nn.init.uniform_(self.layer.bias, -bins, 0)
+        self.layer = nn.Linear(bins)
+        self.layer.weight.data.fill_(bins)
+        torch.nn.init.uniform_(self.layer.bias, -bins, 0)
 
     def forward(self, x):
-        x = F.hardtanh(self.layer(x))
+        x = F.tanh(self.layer(x))
         return x
 
 
@@ -72,7 +72,7 @@ class MLPNUM_Model(nn.Module):
         #self.data_transform_layer = nn.ModuleList([])
         # Input Layer (= first hidden layer)
         self.input_layer = nn.Linear(input_dim*bins, hidden_dim)
-        self.data_transformer_layer = [DataTransformer(1, bins) for i in range(input_dim)]
+        self.data_transformer_layer = [FeaturePrep(bins) for i in range(input_dim)]
         # Hidden Layers (number specified by n_layers)
         self.layers.extend([nn.Linear(hidden_dim, hidden_dim) for _ in range(n_layers - 1)])
 
