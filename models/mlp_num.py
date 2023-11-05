@@ -7,6 +7,8 @@ from models.basemodel_torch import BaseModelTorch
 
 '''
     Custom implementation for the standard multi-layer perceptron
+    with customized feature transformation layer that initializes weights and biases
+    and applies nonlinear activation function element-wise.
 '''
 
 
@@ -55,7 +57,7 @@ class FeaturePrep(torch.nn.Module):
         self.layer = nn.Linear(1, bins)
         self.layer.weight.data.fill_(bins)
         torch.nn.init.uniform_(self.layer.bias, -bins, 0)
-
+        
     def forward(self, x):
         x = F.tanh(self.layer(x))
         return x
@@ -69,10 +71,12 @@ class MLPNUM_Model(nn.Module):
         self.input_dim = input_dim
         self.task = task
         self.layers = nn.ModuleList()
-        #self.data_transform_layer = nn.ModuleList([])
+        self.data_transformer_layer = nn.ModuleList()
+        self.data_transformer_layer.extend([FeaturePrep(bins) for i in range(input_dim)])
+        
         # Input Layer (= first hidden layer)
         self.input_layer = nn.Linear(input_dim*bins, hidden_dim)
-        self.data_transformer_layer = [FeaturePrep(bins) for i in range(input_dim)]
+    
         # Hidden Layers (number specified by n_layers)
         self.layers.extend([nn.Linear(hidden_dim, hidden_dim) for _ in range(n_layers - 1)])
 
@@ -82,6 +86,7 @@ class MLPNUM_Model(nn.Module):
     def forward(self, x):
         # data transformation layer
         x = [self.data_transformer_layer[i](x[:,i].reshape((x.shape[0], 1))) for i in range(len(self.data_transformer_layer))]
+        print(self.data_transformer_layer[0].weight, self.data_transformer_layer[0].bias)
         x = torch.cat(x, dim = 1)
 
         x = F.relu(self.input_layer(x))
@@ -95,5 +100,5 @@ class MLPNUM_Model(nn.Module):
 
         if self.task == "classification":
             x = F.softmax(x, dim=1)
-
+        
         return x

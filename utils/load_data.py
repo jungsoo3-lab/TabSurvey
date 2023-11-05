@@ -138,12 +138,12 @@ def load_data(args):
 
     if args.scale:
         print("Scaling the data...")
-        # if "NUM" not in args.model_name:
-        scaler = StandardScaler()
-        X[:, num_idx] = scaler.fit_transform(X[:, num_idx])
-        # else:
-        #     scaler = MinMaxScaler()
-        #     X[:, num_idx] = scaler.fit_transform(X[:, num_idx])
+        if "NUM" not in args.model_name:
+            scaler = StandardScaler()
+            X[:, num_idx] = scaler.fit_transform(X[:, num_idx])
+        else:
+            scaler = MinMaxScaler()
+            X[:, num_idx] = scaler.fit_transform(X[:, num_idx])
 
 
 
