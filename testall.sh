@@ -22,7 +22,7 @@ MODELS=( #["LinearModel"]=$SKLEARN_ENV
          # ["XGBoost"]=$GBDT_ENV
          # ["CatBoost"]=$GBDT_ENV
          # ["LightGBM"]=$GBDT_ENV
-         # ["MLP"]=$TORCH_ENV
+         ["MLP"]=$TORCH_ENV
          # ["TabNet"]=$TORCH_ENV
          # ["VIME"]=$TORCH_ENV
          # ["TabTransformer"]=$TORCH_ENV
@@ -34,8 +34,8 @@ MODELS=( #["LinearModel"]=$SKLEARN_ENV
          # ["STG"]=$TORCH_ENV
          # ["NAM"]=$TORCH_ENV
          # ["DeepFM"]=$TORCH_ENV
-         #["SAINT"]=$TORCH_ENV
-         ["MLPNUM"]=$TORCH_ENV
+         # ["SAINT"]=$TORCH_ENV
+         # ["MLPNUM"]=$TORCH_ENV
          # ["DANet"]=$TORCH_ENV
           )
 

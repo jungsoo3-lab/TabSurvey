@@ -20,7 +20,7 @@ def get_parser():
     parser.add('--gpu_ids', type=int, action="append", help="IDs of the GPUs used when data_parallel is true")
     parser.add('--data_parallel', action="store_true", help="Distribute the training over multiple GPUs")
 
-    parser.add('--optimize_hyperparameters', action="store_false",
+    parser.add('--optimize_hyperparameters', action="store_true",
                help="Search for the best hyperparameters")
     parser.add('--n_trials', type=int, default=100, help="Number of trials for the hyperparameter optimization")
     parser.add('--direction', type=str, default="minimize", choices=['minimize', 'maximize'],
