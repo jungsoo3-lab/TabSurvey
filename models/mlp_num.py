@@ -86,7 +86,7 @@ class MLPNUM_Model(nn.Module):
     def forward(self, x):
         # data transformation layer
         x = [self.data_transformer_layer[i](x[:,i].reshape((x.shape[0], 1))) for i in range(len(self.data_transformer_layer))]
-        print(self.data_transformer_layer[0].layer.weight, self.data_transformer_layer[0].layerbias)
+        print(self.data_transformer_layer[0].layer.weight, self.data_transformer_layer[0].layer.bias)
         x = torch.cat(x, dim = 1)
 
         x = F.relu(self.input_layer(x))
