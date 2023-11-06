@@ -18,9 +18,9 @@ MODELS=( #["LinearModel"]=$SKLEARN_ENV
          #["KNN"]=$SKLEARN_ENV
          # ["SVM"]=$SKLEARN_ENV
          #["DecisionTree"]=$SKLEARN_ENV
-         # ["RandomForest"]=$SKLEARN_ENV
+         ["RandomForest"]=$SKLEARN_ENV
          ["XGBoost"]=$GBDT_ENV
-         # ["CatBoost"]=$GBDT_ENV
+         ["CatBoost"]=$GBDT_ENV
          # ["LightGBM"]=$GBDT_ENV
          # ["MLP"]=$TORCH_ENV
          # ["TabNet"]=$TORCH_ENV
